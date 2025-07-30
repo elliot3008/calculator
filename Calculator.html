@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=qrOXrfUDKkOX&format=png&color=000000" type="image/png">
+</head>
+<body>
+    <style>
+        body{
+            background-color: black;
+        }
+
+        h1{
+            color: white;
+            width: 310px;
+            height: 70px;
+            margin: 10px;
+            text-align: center;
+            background-color: rgb(71, 71, 71);
+        }
+
+        button{
+            background-color: gray;
+            width: 70px;
+            height: 70px;
+            border-radius: 100%;
+            font-size: 40px;
+            color: white;
+            margin: 5px;
+        }
+
+        .op{
+            background-color: orange;
+        }
+    </style>
+
+<div style="display: flex;
+    justify-content: center;
+    align-items: center;">
+    <div>
+        <h1></h1><br>
+
+        <button onclick="display.innerText= total += '1' ">1</button>
+        <button onclick="display.innerText= total += '2' ">2</button>
+        <button onclick="display.innerText= total += '3' ">3</button>
+        <button onclick="display.innerText= total += '+' " class="op">+</button><br>
+
+        <button onclick="display.innerText= total += '4' ">4</button>
+        <button onclick="display.innerText= total += '5' ">5</button>
+        <button onclick="display.innerText= total += '6' ">6</button>
+        <button onclick="display.innerText= total += '-' " class="op">-</button><br>
+
+        <button onclick="display.innerText= total += '7' ">7</button>
+        <button onclick="display.innerText= total += '8' ">8</button>
+        <button onclick="display.innerText= total += '9' ">9</button>
+        <button onclick="display.innerText= total += '*' " class="op">*</button><br>
+
+        <button onclick="display.innerText= total += '0' ">0</button>
+        <button onclick="display.innerText= total += '.' ">.</button>
+        <button onclick="
+        try{
+            display.innerText= total = eval(total);} 
+        catch(e) {
+            alert('Oh no! You broke the calculator, now you are gonna have to smd(Support My Dreams)!');
+            display.innerText = 'Error';
+            total = '';
+        }">
+        =
+        </button>
+        <button onclick="display.innerText= total += '/' " class="op">/</button><br>
+
+        <button onclick="display.innerText= total ='' " style="font-size: 25px;">Clear</button>
+    </div>
+</div>
+
+<script>
+    let total = "";
+    let display = document.querySelector('h1');
+</script>
+
+</body>
+</html>
