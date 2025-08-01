@@ -1,84 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
-    <link rel="icon" href="https://img.icons8.com/?size=100&id=qrOXrfUDKkOX&format=png&color=000000" type="image/png">
-</head>
-<body>
+    <link
+      rel="icon"
+      href="https://img.icons8.com/?size=100&id=qrOXrfUDKkOX&format=png&color=000000"
+      type="image/png"
+    />
+  </head>
+  <body>
     <style>
-        body{
-            background-color: black;
-        }
+      body {
+        background-color: black;
+      }
 
-        h1{
-            color: white;
-            width: 310px;
-            height: 70px;
-            margin: 10px;
-            text-align: center;
-            background-color: rgb(71, 71, 71);
-        }
+      .calculator-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
 
-        button{
-            background-color: gray;
-            width: 70px;
-            height: 70px;
-            border-radius: 100%;
-            font-size: 40px;
-            color: white;
-            margin: 5px;
-        }
+      h1 {
+        color: white;
+        width: 310px;
+        height: 70px;
+        margin: 10px;
+        text-align: right;
+        background-color: rgb(71, 71, 71);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        overflow: auto;
+        scrollbar-width: none;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        font-size: 40px;
+        word-break: break-all;
+      }
 
-        .op{
-            background-color: orange;
-        }
+      h1::-webkit-scrollbar {
+        display: none;
+      }
+
+      button {
+        background-color: gray;
+        width: 70px;
+        height: 70px;
+        border: 1px solid rgb(206, 206, 206);
+        border-radius: 100%;
+        font-size: 40px;
+        color: white;
+        margin: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: darkgray;
+      }
+
+      .op {
+        background-color: orange;
+      }
+
+      .op:hover {
+        background-color: darkorange;
+      }
+      
+      .utility {
+        background-color: #a5a5a5;
+      }
+
+      .utility:hover {
+        background-color: #8f8f8f;
+      }
     </style>
 
-<div style="display: flex;
-    justify-content: center;
-    align-items: center;">
-    <div>
-        <h1></h1><br>
+    <div class="calculator-container">
+      <div>
+        <h1 id="display">0</h1>
+        <br />
 
-        <button onclick="display.innerText= total += '1' ">1</button>
-        <button onclick="display.innerText= total += '2' ">2</button>
-        <button onclick="display.innerText= total += '3' ">3</button>
-        <button onclick="display.innerText= total += '+' " class="op">+</button><br>
+        <button onclick="addToTotal('1')">1</button>
+        <button onclick="addToTotal('2')">2</button>
+        <button onclick="addToTotal('3')">3</button>
+        <button onclick="addToTotal('+')" class="op">+</button><br />
 
-        <button onclick="display.innerText= total += '4' ">4</button>
-        <button onclick="display.innerText= total += '5' ">5</button>
-        <button onclick="display.innerText= total += '6' ">6</button>
-        <button onclick="display.innerText= total += '-' " class="op">-</button><br>
+        <button onclick="addToTotal('4')">4</button>
+        <button onclick="addToTotal('5')">5</button>
+        <button onclick="addToTotal('6')">6</button>
+        <button onclick="addToTotal('-')" class="op">-</button><br />
 
-        <button onclick="display.innerText= total += '7' ">7</button>
-        <button onclick="display.innerText= total += '8' ">8</button>
-        <button onclick="display.innerText= total += '9' ">9</button>
-        <button onclick="display.innerText= total += '*' " class="op">*</button><br>
+        <button onclick="addToTotal('7')">7</button>
+        <button onclick="addToTotal('8')">8</button>
+        <button onclick="addToTotal('9')">9</button>
+        <button onclick="addToTotal('*')" class="op">x</button><br />
 
-        <button onclick="display.innerText= total += '0' ">0</button>
-        <button onclick="display.innerText= total += '.' ">.</button>
-        <button onclick="
-        try{
-            display.innerText= total = eval(total);} 
-        catch(e) {
-            alert('Oh no! You broke the calculator, now you are gonna have to smd(Support My Dreams)!');
-            display.innerText = 'Error';
-            total = '';
-        }">
-        =
-        </button>
-        <button onclick="display.innerText= total += '/' " class="op">/</button><br>
+        <button onclick="addToTotal('0')">0</button>
+        <button onclick="addToTotal('.')">.</button>
+        <button onclick="calculate()" class="op">=</button>
+        <button onclick="addToTotal('/')" class="op">/</button><br />
 
-        <button onclick="display.innerText= total ='' " style="font-size: 25px;">Clear</button>
+        <button onclick="clearTotal()" class="utility" style="font-size: 25px">AC</button>
+        <button onclick="del()" class="utility" style="font-size: 25px">Del</button>
+      </div>
     </div>
-</div>
 
-<script>
-    let total = "";
-    let display = document.querySelector('h1');
-</script>
+    <script>
+      let total = "";
+      const display = document.getElementById("display");
+      const operators = ["+", "-", "*", "/"];
 
-</body>
+      function clearTotal() {
+        total = "";
+        display.innerText = "0";
+      }
+
+      function addToTotal(val) {
+        if (operators.includes(val) && operators.includes(total.slice(-1))) {
+          total = total.slice(0, -1) + val;
+        } 
+        else if (val === '.' && total.includes('.') && operators.some(op => total.includes(op))) {
+          const lastOperatorIndex = Math.max(...operators.map(op => total.lastIndexOf(op)));
+          const lastNumber = total.substring(lastOperatorIndex + 1);
+          if (lastNumber.includes('.')) {
+              return;
+          }
+          total += val;
+        } else if (val === '.' && total.includes('.')) {
+          return;
+        } else {
+            total += val;
+        }
+
+        display.innerText = total;
+      }
+      function calculate() {
+        try {
+          if (total) {
+            const result = new Function('return ' + total)();
+            total = String(result);
+            display.innerText = total;
+          }
+        } catch (e) {
+          alert("Invalid mathematical expression.");
+          clearTotal();
+        }
+      }
+
+      function del() {
+        total = total.slice(0, -1);
+        display.innerText = total || "0";
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          calculate();
+        } else if (e.key === "Backspace") {
+          del();
+        } else if (
+          (e.key >= "0" && e.key <= "9") ||
+          operators.includes(e.key) ||
+          e.key === "."
+        ) {
+          addToTotal(e.key);
+        }
+      });
+
+      clearTotal();
+    </script>
+  </body>
 </html>
